@@ -2,12 +2,6 @@
 
 Developers can add extention modules such as data processors, filtering, features modelling, strategies and more.
 
-##### 
-```
-set(APP_DIR "/usr/local/Stelgic Fintech/Stelgic")
-set(APP_DIR "/usr/local/Stelgic Fintech/Stelgic")
-```
-
 ### how to compile modules
 
 you might need to update APP_DIR in samples/sources/CMakeLists.txt if the application is installed in custom path.
