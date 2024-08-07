@@ -20,19 +20,8 @@ TaskArray FFTNoiseProcessor::Evaluate(
             FFTNOISE fftCache;
             FFTNOISE& cached = data.cachedValues.emplace<FFTNOISE>(fftCache); 
             // initialize FFT input and output data array
-            cached.inputFreq.resize(numSamples);
-            cached.outFreq.resize(numSamples);
-
             dataRef.lock.Lock();
-            // create instance of fftw input plan
-            cached.in_plan = fftw_plan_dft_1d(
-                numSamples, reinterpret_cast<fftw_complex*>(fftCache.inputFreq.data()), 
-                reinterpret_cast<fftw_complex*>(fftCache.outFreq.data()), FFTW_FORWARD, FFTW_ESTIMATE);
-
-            // create instance of fftw output plan
-            cached.out_plan = fftw_plan_dft_1d(
-                numSamples, reinterpret_cast<fftw_complex*>(fftCache.outFreq.data()), 
-                reinterpret_cast<fftw_complex*>(fftCache.inputFreq.data()),FFTW_BACKWARD, FFTW_ESTIMATE); 
+            cached.init(numSamples);
             dataRef.lock.Unlock();
         }
         

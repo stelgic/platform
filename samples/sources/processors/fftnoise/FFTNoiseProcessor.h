@@ -23,6 +23,23 @@ struct FFTNOISE {
         in_plan = nullptr;
     }
 
+    void init(size_t numSamples) {
+        // initialize FFT input and output data array
+#pragma region
+        inputFreq.resize(numSamples);
+        outFreq.resize(numSamples);
+
+        in_plan = fftw_plan_dft_1d(
+            numSamples, reinterpret_cast<fftw_complex*>(inputFreq.data()), 
+            reinterpret_cast<fftw_complex*>(outFreq.data()), FFTW_FORWARD, FFTW_ESTIMATE);
+
+        // create instance of fftw output plan
+        out_plan = fftw_plan_dft_1d(
+            numSamples, reinterpret_cast<fftw_complex*>(outFreq.data()), 
+            reinterpret_cast<fftw_complex*>(inputFreq.data()),FFTW_BACKWARD, FFTW_ESTIMATE); 
+#pragma endregion
+    }
+
     fftw_plan in_plan;
     fftw_plan out_plan;
     ComplexVector inputFreq;
