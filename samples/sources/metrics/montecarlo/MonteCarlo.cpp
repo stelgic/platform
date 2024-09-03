@@ -1,3 +1,5 @@
+// Copyright Stelgic Fintech Ltd. All Rights Reserved.
+
 #include <random>
 #include "Kernels.hpp"
 #include "MonteCarlo.h"

@@ -1,3 +1,5 @@
+// Copyright Stelgic Fintech Ltd. All Rights Reserved.
+
 #include "EmaKernel.h"
 #include "EmaProcessor.h"
 #include <TableColumnHelper.h>

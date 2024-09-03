@@ -1,3 +1,5 @@
+// Copyright Stelgic Fintech Ltd. All Rights Reserved.
+
 #pragma once
 
 #include <cmath>

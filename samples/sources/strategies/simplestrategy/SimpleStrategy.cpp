@@ -1,3 +1,5 @@
+// Copyright Stelgic Fintech Ltd. All Rights Reserved.
+
 #include "SimpleStrategy.h"
 #include <g3log/g3log.hpp>
 
