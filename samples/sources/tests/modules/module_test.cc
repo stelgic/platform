@@ -173,7 +173,8 @@ namespace
 		ASSERT_TRUE(ok) << "ERROR LOADING " << filePath.string() << " [" << error << "]\n";
 	}
 
-	TEST_F(DatasetHelperTest, LoadDirectConnectorModule) {
+#if defined(_WIN32) || defined(_WIN64)
+	TEST_F(DatasetHelperTest, LoadConnectorModuleDirect) {
 		bool loaded = false;
 		char* (*name)();
 		char* (*version)();
@@ -199,6 +200,25 @@ namespace
 			FreeLibrary(handle);
 		ASSERT_TRUE(loaded) << std::system_category().message(GetLastError());
 	}
+
+	TEST_F(DatasetHelperTest, LoadWsAddon) {
+		bool loaded = false;
+		char* (*name)();
+		char* (*version)();
+		IConnector* (*create)();
+
+		std::string moduleName = "wsqcraftor.node";
+		auto filePath = std::filesystem::canonical("../../ws-addons/build/Release");	
+		filePath.append(moduleName);
+
+		GTEST_COUT << "Loading " << filePath.string() << "\n";
+
+		HMODULE handle = LoadLibrary(filePath.string().c_str());
+		if(handle != NULL)
+			FreeLibrary(handle);
+		ASSERT_TRUE(loaded) << std::system_category().message(GetLastError());
+	}
+#endif
 }
 }
 }
