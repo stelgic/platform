@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include <g3log/g3log.hpp>
 #include <datamodels/OrderData.h>
 #include "CrossEmaStrategy.h"
