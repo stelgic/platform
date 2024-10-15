@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include <IMetricKernel.h>
 
 namespace stelgic
@@ -10,14 +8,14 @@ struct TradeStats : IMetricKernel
     int64_t winTrades = 0;
     double lossPerc = 0;
 
-    void reset() override 
+    void Reset() override 
     { 
         numTrades = 0; 
         winTrades = 0;
         lossPerc = 0.0;
     }
 
-    void update(const double* values, int64_t index, 
+    void Update(const double* values, int64_t index, 
         int64_t oindex, void* outValues=nullptr) override
     {
         ++numTrades;

@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include <IMetrics.h>
 
 namespace stelgic

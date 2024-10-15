@@ -10,7 +10,7 @@ macro( add_metrics_module name)
 
     set(INCLUDE_DIRS 
         ${APP_DIR}/include
-        ${APP_DIR}/include/qcraftor
+        ${APP_DIR}/include/stelgic
         ${APP_DIR}/include/third_party
         ${APP_DIR}/include/third_party/stduuid
         ${APP_DIR}/include/third_party/stduuid/include
@@ -34,7 +34,6 @@ macro( add_metrics_module name)
     # set the include directories
     target_include_directories(
         ${TARGET_METRICS}
-        PRIVATE ${TARGET_SRC}
         PUBLIC ${INCLUDE_DIRS}
     )
 

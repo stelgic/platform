@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include <random>
 #include "Kernels.hpp"
 #include "MonteCarlo.h"
@@ -29,8 +27,8 @@ bool MonteCarlo::Init(
                 IMetricKernel::KernelFactory kernel = IMetricKernel::kernelRegistry.at(metric.name);
                 std::shared_ptr<IMetricKernel> kernelPtr(kernel());
                 IMetricKernel::kernelInstances.insert_or_assign(metric.name, kernelPtr);
-                metric.instances.push_back({metric.name, IMetricKernel::kernelInstances.at(metric.name).get()});
-                metric.instances.back().kernelPtr->reset();
+                metric.instances.push_back({metric.name, IMetricKernel::kernelInstances.at(metric.name)});
+                metric.instances.back().kernelPtr->Reset();
                 metric.source = "montecarlo"; // source table to query data
                 
                 // add multiple instance of same kernel for Monte carlo
@@ -40,8 +38,8 @@ bool MonteCarlo::Init(
                     std::shared_ptr<IMetricKernel> kernelPtr(kernel());
                     std::string colName = metric.name + std::to_string(j);
                     IMetricKernel::kernelInstances.insert_or_assign(colName, kernelPtr);
-                    metric.instances.push_back({colName, IMetricKernel::kernelInstances.at(colName).get()});
-                    metric.instances.back().kernelPtr->reset();
+                    metric.instances.push_back({colName, IMetricKernel::kernelInstances.at(colName)});
+                    metric.instances.back().kernelPtr->Reset();
                 }
 
                 if(metric.showStats) 
@@ -108,10 +106,10 @@ void MonteCarlo::Evaluate(MetricReferenceData& data)
                 if(j > 0)
                 {
                     int64_t index = dist(rng); 
-                    kernelPtr->update(pnls, index, i, columnRawPointers.at(name));
+                    kernelPtr->Update(pnls, index, i, columnRawPointers.at(name));
                 }
                 else // default curve
-                    kernelPtr->update(pnls, i, i, columnRawPointers.at(name));
+                    kernelPtr->Update(pnls, i, i, columnRawPointers.at(name));
                 ++j;
             }
 

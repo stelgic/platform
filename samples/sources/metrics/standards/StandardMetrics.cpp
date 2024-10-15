@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include "Kernels.hpp"
 #include "StandardMetrics.h"
 
@@ -26,8 +24,8 @@ bool StandardMetrics::Init(
                 IMetricKernel::KernelFactory kernel = IMetricKernel::kernelRegistry.at(metric.name);
                 std::shared_ptr<IMetricKernel> kernelPtr(kernel());
                 IMetricKernel::kernelInstances.insert_or_assign(metric.name, kernelPtr);
-                metric.instances.push_back({metric.name, IMetricKernel::kernelInstances.at(metric.name).get()});
-                metric.instances.back().kernelPtr->reset();
+                metric.instances.push_back({metric.name, IMetricKernel::kernelInstances.at(metric.name)});
+                metric.instances.back().kernelPtr->Reset();
                 metric.source = "trades"; // source table to query data
                 
                 Json::Value labels(Json::arrayValue);
@@ -99,7 +97,7 @@ void StandardMetrics::InitializeOutputs(const stelgic::MetricParams &metric)
     for(auto[name, kernelPtr]: metric.instances)
     {
         int colorCode = kernelPtr->ColorCode();
-        Json::Value& dataValue = kernelPtr->GetValue();
+        Json::Value dataValue = kernelPtr->GetValue();
         if(kernelPtr->GetType() == OutType::JSON)
         {
             for(const auto& field: metric.attrs["fields"])
@@ -131,7 +129,7 @@ void StandardMetrics::Evaluate(MetricReferenceData& data)
         for(auto& metric: metrics)
         {
             for(auto[name, kernelPtr]: metric.instances)
-                kernelPtr->update(pnls, i, i, columnRawPointers.at(name));
+                kernelPtr->Update(pnls, i, i, columnRawPointers.at(name));
         }
     }
 

@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include <IMetricKernel.h>
 
 namespace stelgic
@@ -7,12 +5,12 @@ namespace stelgic
 struct CumulReturn : IMetricKernel
 {
     double cumulativeSum = 0.0;
-    void reset() override 
+    void Reset() override 
     { 
         cumulativeSum = 0.0; 
     }
 
-    void update(const double* values, int64_t index, 
+    void Update(const double* values, int64_t index, 
         int64_t oindex, void* outValues=nullptr) override
     {
         cumulativeSum += values[index];
