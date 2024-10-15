@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include "FFTNoiseKernel.h"
 #include "FFTNoiseProcessor.h"
 #include <TableColumnHelper.h>

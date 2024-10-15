@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include "RsiKernel.h"
 #include "RsiProcessor.h"
 #include <TableColumnHelper.h>

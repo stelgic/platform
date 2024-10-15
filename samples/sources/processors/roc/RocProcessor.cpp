@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include "RocKernel.h"
 #include "RocProcessor.h"
 #include <TableColumnHelper.h>

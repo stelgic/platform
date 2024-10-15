@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #pragma once
 
 #define NOMINMAX
@@ -18,12 +16,14 @@ inline bool FFTNoiseFilter(size_t idx, const double* input_values,
     fftw_complex* inputFreq, fftw_complex* outFreq, double *output_values, 
     int cutOff, int field, int nfields, const double *errorVal)
 {
+    size_t halfPoints = 1;
+    size_t instrumOffset = 0;
     // check if pointers are null
     bool success = (input_values && in_plan && out_plan && 
                     inputFreq && outFreq && output_values);
     if(!success) goto END;
 
-    const size_t instrumOffset = idx * dataLen;
+    instrumOffset = idx * dataLen;
 
     // copy input real
     for(size_t i = 0; i < dataLen; ++i)
@@ -36,7 +36,7 @@ inline bool FFTNoiseFilter(size_t idx, const double* input_values,
     fftw_execute_dft(in_plan, inputFreq, outFreq);
 
     // Apply low-pass filter in frequency domain
-    int halfPoints = dataLen/2;
+    halfPoints = dataLen/2;
     for(size_t i = 0; i <= halfPoints; ++i)
     {
         if(i > cutOff)

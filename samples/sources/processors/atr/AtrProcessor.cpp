@@ -1,5 +1,3 @@
-// Copyright Stelgic Fintech Ltd. All Rights Reserved.
-
 #include "AtrKernel.h"
 #include "AtrProcessor.h"
 #include <TableColumnHelper.h>
