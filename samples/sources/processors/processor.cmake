@@ -10,12 +10,20 @@ macro( add_processor_module name)
     set(LDFLAGS "-Wl,-rpath,'$$ORIGIN'")
 
     set(INCLUDE_DIRS 
-    ${APP_DIR}/include
-    ${APP_DIR}/include/stelgic
-    ${APP_DIR}/include/third_party
-    ${APP_DIR}/include/third_party/stduuid
-    ${APP_DIR}/include/third_party/stduuid/include
+        ${APP_DIR}/include
+        ${APP_DIR}/include/stelgic
+        ${APP_DIR}/include/third_party
+        ${APP_DIR}/include/third_party/stduuid
+        ${APP_DIR}/include/third_party/stduuid/include
     )
+
+    if(WIN32)
+        set(LIBRARY_DIRS ${APP_DIR}/lib/win64 ${APP_DIR}/bin)
+        SET(LIBS g3log jsoncpp arrow arrow_dataset arrow_acero)
+    elseif(UNIX)
+        set(LIBRARY_DIRS ${APP_DIR}/lib/unix ${APP_DIR}/bin)
+        SET(LIBS m stdc++ stelgic g3log arrow arrow_dataset jsoncpp dl uuid)
+    endif()
 
     file(GLOB TARGET_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/${name}/*.h
