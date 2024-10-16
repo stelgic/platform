@@ -19,10 +19,10 @@ macro( add_processor_module name)
 
     if(WIN32)
         set(LIBRARY_DIRS ${APP_DIR}/lib/win64 ${APP_DIR}/bin)
-        SET(LIBS g3log jsoncpp arrow arrow_dataset arrow_acero)
+        SET(LIBS stelgic.lib g3log jsoncpp arrow arrow_dataset arrow_acero)
     elseif(UNIX)
         set(LIBRARY_DIRS ${APP_DIR}/lib/unix ${APP_DIR}/bin)
-        SET(LIBS m stdc++ stelgic g3log arrow arrow_dataset jsoncpp dl uuid)
+        SET(LIBS m stdc++ stelgic g3log arrow arrow_dataset arrow_acero jsoncpp dl uuid)
     endif()
 
     file(GLOB TARGET_SRC

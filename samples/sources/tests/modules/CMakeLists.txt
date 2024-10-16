@@ -12,7 +12,7 @@ set(INCLUDE_DIRS
 
 if(WIN32)
     set(LIBRARY_DIRS ${APP_DIR}/lib/win64 ${APP_DIR}/bin)
-    SET(LIBS stelgic g3log cpr arrow arrow_dataset jsoncpp)
+    SET(LIBS stelgic g3log arrow arrow_dataset jsoncpp)
 elseif(UNIX)
     set(LIBRARY_DIRS ${APP_DIR}/lib/unix ${APP_DIR}/bin)
     SET(LIBS m stdc++ stelgic g3log curl cpr ssl crypto jsoncpp dl uuid)
