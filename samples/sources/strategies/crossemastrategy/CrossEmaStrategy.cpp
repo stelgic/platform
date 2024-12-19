@@ -131,11 +131,11 @@ std::vector<Json::Value> CrossEmaStrategy::PredictSignal(const StrategyInputData
         const auto& longEma = indicators.at(longEmaIdx);
 
         // construct column name
-        auto rsiNames = BuildProcessorsColumnNames(instrum, rsi, "winsize");
-        auto atrNames = BuildProcessorsColumnNames(instrum, atr, "winsize");
-        auto shortEmaNames = BuildProcessorsColumnNames(instrum, shortEma, "winsize");
-        auto midEmaNames = BuildProcessorsColumnNames(instrum, midEma, "winsize");
-        auto longEmaNames = BuildProcessorsColumnNames(instrum, longEma, "winsize");
+        auto rsiNames = BuildProcessorsColumnNames(instrum, rsi, "label");
+        auto atrNames = BuildProcessorsColumnNames(instrum, atr, "label");
+        auto shortEmaNames = BuildProcessorsColumnNames(instrum, shortEma, "label");
+        auto midEmaNames = BuildProcessorsColumnNames(instrum, midEma, "label");
+        auto longEmaNames = BuildProcessorsColumnNames(instrum, longEma, "label");
         std::string closeName = instrum;
         closeName.append("#").append("close");
 
