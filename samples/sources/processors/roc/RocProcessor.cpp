@@ -37,17 +37,21 @@ TaskArray RocProcessor::Evaluate(
             for(size_t id=0; id < symbolsCount; ++id)
             {
                 size_t j = id * nfields + 1; // add 1 to skip first column timestamp
+                int numColumns = dataRef.ohlcvRecord->num_columns();
                 //std::iota(std::begin(colIds), std::end(colIds), j);
-                dataRef.lock.Lock();
-                auto fieldColumn = dataRef.ohlcvRecord->column(j+field);
-                dataRef.lock.Unlock();
-                if(fieldColumn && outdata)
+                if((j+field) < static_cast<size_t>(numColumns))
                 {
-                    const double* fieldValues = castTableColumn<double>(fieldColumn);
-                    bool result = RateOfChange(
-                        id, fieldValues, numSamples, aSize, outdata, winSize, 
-                        field, nfields, &errorVal, rocCache.values, scale);
-                    counter += (int)result;
+                    dataRef.lock.Lock();
+                    auto fieldColumn = dataRef.ohlcvRecord->column(j+field);
+                    dataRef.lock.Unlock();
+                    if(fieldColumn && outdata)
+                    {
+                        const double* fieldValues = castTableColumn<double>(fieldColumn);
+                        bool result = RateOfChange(
+                            id, fieldValues, numSamples, aSize, outdata, winSize, 
+                            field, nfields, &errorVal, rocCache.values, scale);
+                        counter += (int)result;
+                    }
                 }
             }
         }

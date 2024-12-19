@@ -34,23 +34,27 @@ TaskArray AtrProcessor::Evaluate(
             for(size_t id=0; id < symbolsCount; ++id)
             {
                 size_t j = id * nfields + 1; // add 1 to skip first column timestamp
+                int numColumns = dataRef.ohlcvRecord->num_columns();
                 //std::iota(std::begin(colIds), std::end(colIds), j);
-                dataRef.lock.Lock();
-                auto highColumn = dataRef.ohlcvRecord->column(j+field+1);
-                auto lowColumn = dataRef.ohlcvRecord->column(j+field+2);
-                auto closeColumn = dataRef.ohlcvRecord->column(j+field+3);
-                dataRef.lock.Unlock();
-                if(highColumn && lowColumn && closeColumn && outdata)
+                if((j+field) < static_cast<size_t>(numColumns))
                 {
-                    const double* highs = castTableColumn<double>(highColumn);
-                    const double* lows = castTableColumn<double>(lowColumn);
-                    const double* closes = castTableColumn<double>(closeColumn);
-                    std::vector<const double*> fieldsValues = {highs,lows,closes};
-                        
-                    bool result = AverageTrueRange(
-                        id, fieldsValues, numSamples, aSize, outdata, winSize, field, nfields, 
-                        &errorVal, atrCache.prevAtrs.data(), atrCache.prevCloses.data(), normalized, scale);
-                    counter += (int)result;
+                    dataRef.lock.Lock();
+                    auto highColumn = dataRef.ohlcvRecord->column(j+field+1);
+                    auto lowColumn = dataRef.ohlcvRecord->column(j+field+2);
+                    auto closeColumn = dataRef.ohlcvRecord->column(j+field+3);
+                    dataRef.lock.Unlock();
+                    if(highColumn && lowColumn && closeColumn && outdata)
+                    {
+                        const double* highs = castTableColumn<double>(highColumn);
+                        const double* lows = castTableColumn<double>(lowColumn);
+                        const double* closes = castTableColumn<double>(closeColumn);
+                        std::vector<const double*> fieldsValues = {highs,lows,closes};
+                            
+                        bool result = AverageTrueRange(
+                            id, fieldsValues, numSamples, aSize, outdata, winSize, field, nfields, 
+                            &errorVal, atrCache.prevAtrs.data(), atrCache.prevCloses.data(), normalized, scale);
+                        counter += (int)result;
+                    }
                 }
             }
         }
